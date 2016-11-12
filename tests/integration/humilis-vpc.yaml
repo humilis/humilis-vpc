@@ -1,0 +1,8 @@
+---
+humilis-vpc:
+    description:
+        A dummy environment used for testing the vpc plugin.
+
+    layers:
+        - layer: vpc
+          layer_type: vpc
