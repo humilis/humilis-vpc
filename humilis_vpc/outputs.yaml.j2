@@ -6,14 +6,14 @@ outputs:
         Value:
             Ref: Vpc
     {% for _ in public_subnets %}
-    PublicSubnet{{loop.index}}Id:
+    PublicSubnet{{loop.index}}:
         Description:
-            Physical Id of PublicSubnet{{loop.counter}}
+            Physical Id of PublicSubnet{{loop.index}}
         Value:
             Ref: PublicSubnet{{loop.index}}
     {% endfor %}
     {% for _ in private_subnets %}
-    PrivateSubnet{{loop.index}}Id:
+    PrivateSubnet{{loop.index}}:
         Description:
             Physical Id of PrivateSubnet{{loop.counter}}
         Value:
