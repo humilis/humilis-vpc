@@ -2,7 +2,6 @@ Humilis plug-in to deploy a VPC
 ===================================================
 
 [![PyPI](https://img.shields.io/pypi/v/humilis-vpc.svg?style=flat)](https://pypi.python.org/pypi/humilis-vpc)
-[![Build Status](https://travis-ci.org/humilis/humilis-vpc.svg?branch=master)](https://travis-ci.org/humilis/humilis-elasticache)
 
 A [humilis][humilis] plug-in layer that deploys an [VPC][vpc].
 
