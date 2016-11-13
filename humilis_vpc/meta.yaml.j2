@@ -9,7 +9,7 @@ meta:
                 Virtual Private Cloud
             value:
                 cidr: 10.45.0.0/16
-                name: humilis-vpc
+                name: {{_env.name}}-{{_env.stage}}
 
         public_subnets:
             description:

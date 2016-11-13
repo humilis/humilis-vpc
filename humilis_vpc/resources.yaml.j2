@@ -17,7 +17,7 @@ resources:
         CidrBlock: "{{subnet.cidr}}"
         Tags:
             - Key: Name
-              Value: {{subnet.name}}
+              Value: {{subnet.name or (_env.name + '-' + _env.stage + '-public')}}
     {% endfor %}
     {% for subnet in private_subnets %}
     PrivateSubnet{{loop.index}}:
@@ -28,12 +28,15 @@ resources:
         CidrBlock: "{{subnet.cidr}}"
         Tags:
             - Key: Name
-              Value: {{subnet.name}}
+              Value: {{subnet.name or (_env.name + '-' + _env.stage + '-private')}}
     {% endfor %}
     {# The Internet gateway #}
     InternetGateway:
       Type: "AWS::EC2::InternetGateway"
-      Properties: {}
+      Properties:
+        Tags:
+            - Key: Name
+              Value: {{vpc.name}}
     AttachGateway:
       Type: "AWS::EC2::VPCGatewayAttachment"
       Properties:
@@ -47,6 +50,9 @@ resources:
       Properties:
         VpcId:
           Ref: Vpc
+        Tags:
+            - Key: Name
+              Value: {{vpc.name}}
       DependsOn: AttachGateway
     Route:
       Type: "AWS::EC2::Route"
