@@ -52,7 +52,7 @@ resources:
           Ref: Vpc
         Tags:
             - Key: Name
-              Value: {{vpc.name}}
+              Value: {{vpc.name}}-default
       DependsOn: AttachGateway
     Route:
       Type: "AWS::EC2::Route"
@@ -68,6 +68,9 @@ resources:
       Properties:
         VpcId:
           Ref: Vpc
+      Tags:
+        - Key: Name
+          Value: {{vpc.name}}-private
     PrivateSubnet{{loop.index}}RouteTableAssociation:
       Type: "AWS::EC2::SubnetRouteTableAssociation"
       Properties:
