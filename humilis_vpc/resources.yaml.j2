@@ -18,6 +18,13 @@ resources:
         Tags:
             - Key: Name
               Value: {{subnet.name or (_env.name + '-' + _env.stage + '-public')}}
+    PublicSubnet{{loop.index}}RouteTableAssociation:
+      Type: "AWS::EC2::SubnetRouteTableAssociation"
+      Properties:
+        SubnetId:
+          Ref: PublicSubnet{{loop.index}}
+        RouteTableId:
+          Ref: VpcRouteTable
     {% endfor %}
     {% for subnet in private_subnets %}
     PrivateSubnet{{loop.index}}:
@@ -52,7 +59,7 @@ resources:
           Ref: Vpc
         Tags:
             - Key: Name
-              Value: {{vpc.name}}-default
+              Value: {{vpc.name}}-public
       DependsOn: AttachGateway
     Route:
       Type: "AWS::EC2::Route"
