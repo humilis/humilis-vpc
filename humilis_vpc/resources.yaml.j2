@@ -5,6 +5,7 @@ resources:
       Type: "AWS::EC2::VPC"
       Properties:
         CidrBlock: "{{vpc.cidr}}"
+        EnableDnsHostnames: {{enable_dns_hostnames}}
         Tags:
             - Key: Name
               Value: {{vpc.name}}
