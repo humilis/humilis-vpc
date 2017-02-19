@@ -6,3 +6,4 @@ humilis-vpc:
     layers:
         - layer: vpc
           layer_type: vpc
+          domain: fih.io

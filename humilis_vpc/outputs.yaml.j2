@@ -5,6 +5,13 @@ outputs:
             The Physical Id of the VPC
         Value:
             Ref: Vpc
+    {% if domain %}
+    DnsHostedZoneId:
+        Description:
+            The ID of the private hosted zone for {{domain}}
+        Value:
+            Ref: DnsHostedZone
+    {% endif %}
     {% for _ in public_subnets %}
     PublicSubnet{{loop.index}}:
         Description:

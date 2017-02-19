@@ -52,6 +52,18 @@ resources:
           Ref: Vpc
         InternetGatewayId:
           Ref: InternetGateway
+    ######################################################################## DNS
+    {% if domain %}
+    DnsHostedZone:
+      Type: "AWS::Route53::HostedZone"
+      Properties:
+        HostedZoneConfig:
+          Comment: "Private hosted zone for {{domain}}"
+        Name: "{{domain}}"
+        VPCs:
+          - VPCId: {Ref: Vpc}
+            VPCRegion: {Ref: "AWS::Region"}
+    {% endif %}
     #################################################################### ROUTING
     VpcRouteTable:
       Type: "AWS::EC2::RouteTable"
