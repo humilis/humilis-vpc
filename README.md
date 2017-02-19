@@ -62,8 +62,6 @@ make delete
 
 See [humilis][humilis] documentation.
 
-[humilis]: https://github.com//humilis/blob/master/README.md
-
 
 ## Contact
 
@@ -84,6 +82,6 @@ See [License file][LICENSE].
 [LICENSE]: https://github.com/humilis/humilis-vpc/blob/master/LICENSE.txt
 
 
-© 2016 German Gomez-Herrero, [Find Hotel][fh] and others.
+© 2017 German Gomez-Herrero, [Find Hotel][fh].
 
 [fh]: http://company.findhotel.net
