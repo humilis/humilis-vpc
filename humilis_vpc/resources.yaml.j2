@@ -88,9 +88,9 @@ resources:
       Properties:
         VpcId:
           Ref: Vpc
-      Tags:
-        - Key: Name
-          Value: {{vpc.name}}-private
+        Tags:
+            - Key: Name
+              Value: {{vpc.name}}-private
     PrivateSubnet{{loop.index}}RouteTableAssociation:
       Type: "AWS::EC2::SubnetRouteTableAssociation"
       Properties:
@@ -104,7 +104,7 @@ resources:
         RouteTableId:
           Ref: PrivateSubnet{{loop.index}}RouteTable
         DestinationCidrBlock: 0.0.0.0/0
-        GatewayId:
+        NatGatewayId:
           Ref: NatGateway
     {% endfor %}
     {# Security: Network ACLs #}
