@@ -24,5 +24,5 @@ outputs:
         Description:
             Physical Id of PrivateSubnet{{loop.counter}}
         Value:
-            Ref: PrivateSubnet{{loop.counter}}
+            Ref: PrivateSubnet{{loop.index}}
     {% endfor %}
