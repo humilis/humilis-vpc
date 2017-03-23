@@ -1,5 +1,116 @@
 ---
 resources:
+    ################################################################## S3KEYRING
+    {% if has_s3keyring %}
+    S3KeyringBucket:
+      Type: AWS::S3::Bucket
+      Properties: {}
+
+    S3KeyringKey: 
+      Type: "AWS::KMS::Key"
+      Properties: 
+        Description: "Gives access to this VPC S3keyring"
+        KeyPolicy: 
+          Version: "2012-10-17"
+          Id: "key-default-1"
+          Statement: 
+            {% for user in s3keyring.admins %}
+            - 
+              Sid: "Allow administration of the key"
+              Effect: "Allow"
+              Principal: 
+                AWS: 
+                    "Fn::Join":
+                        - ""
+                        - ["arn:aws:iam::", {"Ref": "AWS::AccountId"}, ":user/{{user}}"]
+              Action: 
+                - "kms:Create*"
+                - "kms:Describe*"
+                - "kms:Enable*"
+                - "kms:List*"
+                - "kms:Put*"
+                - "kms:Update*"
+                - "kms:Revoke*"
+                - "kms:Disable*"
+                - "kms:Get*"
+                - "kms:Delete*"
+                - "kms:ScheduleKeyDeletion"
+                - "kms:CancelKeyDeletion"
+              Resource: "*"
+            {% endfor %}
+            {% for user in s3keyring.users %}
+            - 
+              Sid: "Allow IAM users to access the S3Keyring KMS key"
+              Effect: "Allow"
+              Principal: 
+                AWS: 
+                    "Fn::Join":
+                        - ""
+                        - ["arn:aws:iam::", {"Ref": "AWS::AccountId"}, ":user/{{user}}"]
+              Action: 
+                - "kms:Encrypt"
+                - "kms:Decrypt"
+                - "kms:ReEncrypt*"
+                - "kms:GenerateDataKey*"
+                - "kms:DescribeKey"
+              Resource: "*"
+            {% endfor %}
+            - 
+              Sid: "Allow S3KeyringRole to access the S3Keyring KMS key"
+              Effect: "Allow"
+              Principal: 
+                AWS: 
+                    "Fn::Join":
+                        - ""
+                        - ["arn:aws:iam::", {"Ref": "AWS::AccountId"}, ":role/", {"Ref": S3KeyringRole}]
+              Action: 
+                - "kms:Encrypt"
+                - "kms:Decrypt"
+                - "kms:ReEncrypt*"
+                - "kms:GenerateDataKey*"
+                - "kms:DescribeKey"
+              Resource: "*"
+
+    S3KeyringRole:
+        Type: "AWS::IAM::Role"
+        Properties: 
+            AssumeRolePolicyDocument: 
+                Version: "2012-10-17"
+                Statement: 
+                  - 
+                    Effect: "Allow"
+                    Principal: 
+                      Service: 
+                        - "ec2.amazonaws.com"
+                    Action: 
+                      - "sts:AssumeRole"
+            Policies:
+                - PolicyName: S3Keyring 
+                  PolicyDocument:
+                    Version: "2012-10-17"
+                    Statement:
+                        - Effect: Allow
+                          Action:
+                            - "s3:ListBucket"
+                          Resource: 
+                            "Fn::Join":
+                                - ""
+                                - ["arn:aws:s3:::", {Ref: S3KeyringBucket}]
+                          Condition: {}
+                        - Effect: Allow
+                          Action:
+                            - "s3:DeleteObject"
+                            - "s3:GetObject"
+                            - "s3:PutObject"
+                          Resource:
+                            "Fn::Join":
+                                - ""
+                                - ["arn:aws:s3:::", {Ref: S3KeyringBucket}, "/*"]
+            Path: "/"
+            RoleName: "{{_env.name}}-{{_layer.name}}-{{_env.stage}}-s3keyring"
+
+    {% endif %}
+
     ############################################################## VPC & SUBNETS
     Vpc:
       Type: "AWS::EC2::VPC"

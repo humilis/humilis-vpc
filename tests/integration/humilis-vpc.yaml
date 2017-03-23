@@ -7,3 +7,4 @@ humilis-vpc:
         - layer: vpc
           layer_type: vpc
           domain: fih.io
+          has_s3keyring: yes
