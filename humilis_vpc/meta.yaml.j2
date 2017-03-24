@@ -36,7 +36,8 @@ meta:
                 # By default, no private subnets will be created
                 []
 
-        s3keyring:
+        has_s3keyring:
             description:
-                The S3Keyring configuration
-            value: {}
+                Set to yes if the VPC will use a S3keyring bucket
+            value:
+                no
