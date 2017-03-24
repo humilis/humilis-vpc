@@ -26,13 +26,3 @@ outputs:
         Value:
             Ref: PrivateSubnet{{loop.index}}
     {% endfor %}
-    {% if has_s3keyring %}
-    S3KeyringRole:
-        Ref: S3KeyringRole
-
-    S3KeyringBucket:
-        Ref: S3KeyringBucket
-
-    S3KeyringKey:
-        Ref: S3KeyringKey
-    {% endif %}
