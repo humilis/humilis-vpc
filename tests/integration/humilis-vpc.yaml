@@ -7,3 +7,8 @@ humilis-vpc:
         - layer: vpc
           layer_type: vpc
           domain: fih.io
+          public_subnets:
+            - cidr: 10.45.0.0/24
+              az: a
+            - cidr: 10.45.1.0/24
+              az: b

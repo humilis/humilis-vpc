@@ -15,6 +15,12 @@ resources:
       Properties:
         VpcId:
           Ref: Vpc
+        {% if subnet.az %}
+        AvailabilityZone:
+            "Fn::Join":
+              - ""
+              - [{Ref: "AWS::Region"}, "{{subnet.az}}"]
+        {% endif %}
         CidrBlock: "{{subnet.cidr}}"
         Tags:
             - Key: Name
@@ -33,6 +39,12 @@ resources:
       Properties:
         VpcId:
           Ref: Vpc
+        {% if subnet.az %}
+        AvailabilityZone:
+            "Fn::Join":
+              - ""
+              - [{Ref: "AWS::Region"}, "{{subnet.az}}"]
+        {% endif %}
         CidrBlock: "{{subnet.cidr}}"
         Tags:
             - Key: Name
