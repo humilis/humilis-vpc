@@ -26,3 +26,10 @@ outputs:
         Value:
             Ref: PrivateSubnet{{loop.index}}
     {% endfor %}
+    {% if has_efs %}
+    FileSystem:
+        Description:
+            Physical ID of the EFS in this VPC
+        Value:
+            Ref: FileSystem
+    {% endif %}

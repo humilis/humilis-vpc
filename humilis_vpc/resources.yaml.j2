@@ -180,3 +180,13 @@ resources:
               - NatEip
               - AllocationId
     {% endif %}
+    ######################################################################## EFS
+    {% if has_efs %}
+    FileSystem:
+        Type: "AWS::EFS::FileSystem"
+        Properties:
+            PerformanceMode: generalPurpose
+            FileSystemTags:
+                - Key: Name
+                  Value: "{{_env.name}}-{{_env.stage}}-{{_layer.name}}"
+    {% endif %}
