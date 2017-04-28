@@ -6,6 +6,7 @@ humilis-vpc:
     layers:
         - layer: vpc
           layer_type: vpc
+          description: dummy layer to test the humilis-vpc plugin
           has_efs: yes
           domain: fih.io
           public_subnets:
