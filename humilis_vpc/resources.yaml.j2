@@ -189,4 +189,34 @@ resources:
             FileSystemTags:
                 - Key: Name
                   Value: "{{_env.name}}-{{_env.stage}}-{{_layer.name}}"
+
+    MountTargetSecurityGroup:
+        Type: "AWS::EC2::SecurityGroup"
+        Properties:
+            VpcId: {Ref: Vpc}
+            GroupDescription: "{{_env.name}}-{{_env.stage}} EFS secgroup"
+            SecurityGroupIngress: []
+
+    # Allow all instances in the MountTargetSecurityGroup to access the EFS
+    InstanceSecurityGroupIngress:
+        Type: "AWS::EC2::SecurityGroupIngress"
+        Properties:
+            GroupId: {Ref: MountTargetSecurityGroup}
+            IpProtocol: -1
+            FromPort: -1
+            ToPort: -1
+            SourceSecurityGroupId: {Ref: MountTargetSecurityGroup}
+
+    {% set azs = [] %}
+    {% for subnet in public_subnets %}
+    {% if subnet.az not in azs %}
+    {% azs.append(subnet.az) %}
+    MountTarget{{subnet.az.upper()}}:
+      Type: "AWS::EFS::MountTarget"
+      Properties:
+        FileSystemId: {Ref: FileSystem}
+        # The subnet parameter was deprecated for the subnet_id parameter
+        SubnetId: {Ref: PublicSubnet{{loop.index}}
+        SecurityGroups: [{Ref: MountTargetSecurityGroup}]
+    {% endif %}
     {% endif %}
