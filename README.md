@@ -3,7 +3,7 @@ Humilis plug-in to deploy a VPC
 
 [![PyPI](https://img.shields.io/pypi/v/humilis-vpc.svg?style=flat)](https://pypi.python.org/pypi/humilis-vpc)
 
-A [humilis][humilis] plug-in layer that deploys an [VPC][vpc].
+A [humilis][humilis] plug-in layer that deploys a [VPC][vpc].
 
 [vpc]: https://aws.amazon.com/vpc/
 [humilis]: https://github.com/humilis/humilis

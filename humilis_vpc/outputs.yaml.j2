@@ -32,4 +32,9 @@ outputs:
             Physical ID of the EFS in this VPC
         Value:
             Ref: FileSystem
+    FileSystemSecurityGroup:
+        Description:
+            Physical ID of the security group for the EFS mount target
+        Value:
+            Ref: MountTargetSecurityGroup
     {% endif %}

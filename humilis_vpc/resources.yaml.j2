@@ -57,6 +57,7 @@ resources:
         Tags:
             - Key: Name
               Value: {{vpc.name}}
+
     AttachGateway:
       Type: "AWS::EC2::VPCGatewayAttachment"
       Properties:
@@ -64,6 +65,7 @@ resources:
           Ref: Vpc
         InternetGatewayId:
           Ref: InternetGateway
+
     ######################################################################## DNS
     {% if domain %}
     DnsHostedZone:
@@ -210,13 +212,26 @@ resources:
     {% set azs = [] %}
     {% for subnet in public_subnets %}
     {% if subnet.az not in azs %}
-    {% azs.append(subnet.az) %}
+    {% set _ = azs.append(subnet.az) %}
     MountTarget{{subnet.az.upper()}}:
       Type: "AWS::EFS::MountTarget"
       Properties:
         FileSystemId: {Ref: FileSystem}
         # The subnet parameter was deprecated for the subnet_id parameter
-        SubnetId: {Ref: PublicSubnet{{loop.index}}
+        SubnetId: {Ref: PublicSubnet{{loop.index}}}
         SecurityGroups: [{Ref: MountTargetSecurityGroup}]
     {% endif %}
+    {% endfor %}
+    {% for subnet in private_subnets %}
+    {% if subnet.az not in azs %}
+    {% set _ = azs.append(subnet.az) %}
+    MountTarget{{subnet.az.upper()}}:
+      Type: "AWS::EFS::MountTarget"
+      Properties:
+        FileSystemId: {Ref: FileSystem}
+        # The subnet parameter was deprecated for the subnet_id parameter
+        SubnetId: {Ref: PublicSubnet{{loop.index}}}
+        SecurityGroups: [{Ref: MountTargetSecurityGroup}]
+    {% endif %}
+    {% endfor %}
     {% endif %}
