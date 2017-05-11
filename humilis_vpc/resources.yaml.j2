@@ -211,9 +211,14 @@ resources:
 
     {% set azs = [] %}
     {% for subnet in public_subnets %}
-    {% if subnet.az not in azs %}
-    {% set _ = azs.append(subnet.az) %}
-    MountTarget{{subnet.az.upper()}}:
+    {% if subnet.az %}
+    {% set az = subnet.az %}
+    {% else %}
+    {% set az = 'a' %}
+    {% endif %}
+    {% if az not in azs %}
+    {% set _ = azs.append(az) %}
+    MountTarget{{az.upper()}}:
       Type: "AWS::EFS::MountTarget"
       Properties:
         FileSystemId: {Ref: FileSystem}
@@ -223,9 +228,14 @@ resources:
     {% endif %}
     {% endfor %}
     {% for subnet in private_subnets %}
-    {% if subnet.az not in azs %}
-    {% set _ = azs.append(subnet.az) %}
-    MountTarget{{subnet.az.upper()}}:
+    {% if subnet.az %}
+    {% set az = subnet.az %}
+    {% else %}
+    {% set az = 'a' %}
+    {% endif %}
+    {% if az not in azs %}
+    {% set _ = azs.append(az) %}
+    MountTarget{{az.upper()}}:
       Type: "AWS::EFS::MountTarget"
       Properties:
         FileSystemId: {Ref: FileSystem}
