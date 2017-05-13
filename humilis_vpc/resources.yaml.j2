@@ -200,7 +200,7 @@ resources:
             SecurityGroupIngress: []
 
     # Allow all instances in the MountTargetSecurityGroup to access the EFS
-    InstanceSecurityGroupIngress:
+    MountTargetSecurityGroupIngress:
         Type: "AWS::EC2::SecurityGroupIngress"
         Properties:
             GroupId: {Ref: MountTargetSecurityGroup}
