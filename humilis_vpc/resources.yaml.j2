@@ -28,6 +28,7 @@ resources:
     PublicSubnet{{loop.index}}RouteTableAssociation:
       Type: "AWS::EC2::SubnetRouteTableAssociation"
       Properties:
+        MapPublicIpOnLaunch: yes
         SubnetId:
           Ref: PublicSubnet{{loop.index}}
         RouteTableId:
