@@ -13,6 +13,7 @@ resources:
     PublicSubnet{{loop.index}}:
       Type: "AWS::EC2::Subnet"
       Properties:
+        MapPublicIpOnLaunch: yes
         VpcId:
           Ref: Vpc
         {% if subnet.az %}
@@ -37,7 +38,6 @@ resources:
     PrivateSubnet{{loop.index}}:
       Type: "AWS::EC2::Subnet"
       Properties:
-        MapPublicIpOnLaunch: yes
         VpcId:
           Ref: Vpc
         {% if subnet.az %}
