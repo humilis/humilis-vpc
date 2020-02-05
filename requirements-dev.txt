@@ -1,7 +1,4 @@
 # dev utilities
-ipython
-ipdb
-pdbpp
 pypandoc
 
 -r requirements-test.txt
