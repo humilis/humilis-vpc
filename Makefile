@@ -46,5 +46,6 @@ delete: develop
 	$(HUMILIS) delete --stage $(STAGE) $(HUMILIS_ENV).yaml
 
 pypi: develop
+	$(PIP) install twine
 	$(PYTHON) setup.py sdist
 	$(TWINE) upload dist/*

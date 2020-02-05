@@ -1,5 +1,7 @@
 # dev utilities
 pypandoc
-twine
+
+# Do not install twine here!
+# it will lead to a dependency conflict
 
 -r requirements-test.txt
