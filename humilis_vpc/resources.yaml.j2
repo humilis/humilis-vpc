@@ -189,6 +189,8 @@ resources:
         Type: "AWS::EFS::FileSystem"
         Properties:
             PerformanceMode: generalPurpose
+            LifecyclePolicies:
+                - TransitionToIA: AFTER_90_DAYS
             FileSystemTags:
                 - Key: Name
                   Value: "{{_env.name}}-{{_env.stage}}-{{_layer.name}}"
