@@ -5,6 +5,10 @@ outputs:
             The Physical Id of the VPC
         Value:
             Ref: Vpc
+    CidrBlock:
+        Description:
+            The CIDR block of the VPC
+        Value: {{vpc.cidr}}
     {% if domain %}
     DnsHostedZoneId:
         Description:
