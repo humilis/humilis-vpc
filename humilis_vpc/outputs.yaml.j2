@@ -9,6 +9,13 @@ outputs:
         Description:
             The CIDR block of the VPC
         Value: {{vpc.cidr}}
+    DefaultSecurityGroup:
+        Description:
+            The default security group of the VPC
+        Value:
+          "Fn::GetAtt":
+              - Vpc 
+              - DefaultSecurityGroup 
     {% if domain %}
     DnsHostedZoneId:
         Description:
