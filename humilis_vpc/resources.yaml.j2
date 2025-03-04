@@ -191,6 +191,9 @@ resources:
             PerformanceMode: generalPurpose
             LifecyclePolicies:
                 - TransitionToIA: AFTER_90_DAYS
+                {% if transition_to_primary_storage %}
+                - TransitionToPrimaryStorageClass: AFTER_1_ACCESS
+                {% endif %}
             FileSystemTags:
                 - Key: Name
                   Value: "{{_env.name}}-{{_env.stage}}-{{_layer.name}}"
