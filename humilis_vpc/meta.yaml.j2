@@ -43,3 +43,9 @@ meta:
                 Set to yes if the VPC should have an EFS
             value:
                 no
+
+        transition_to_primary_storage:
+            description:
+                Set to yes to move files back to primary (Standard) storage after they are accessed in IA or Archive storage. Metadata operations such as listing the contents of a directory don't count as file access events.
+            value:
+                no
