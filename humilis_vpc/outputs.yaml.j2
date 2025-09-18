@@ -14,8 +14,8 @@ outputs:
             The default security group of the VPC
         Value:
           "Fn::GetAtt":
-              - Vpc 
-              - DefaultSecurityGroup 
+              - Vpc
+              - DefaultSecurityGroup
     {% if domain %}
     DnsHostedZoneId:
         Description:
@@ -37,6 +37,13 @@ outputs:
         Value:
             Ref: PrivateSubnet{{loop.index}}
     {% endfor %}
+    {% if enable_s3_endpoint %}
+    S3VpcEndpoint:
+        Description:
+            Physical ID of the S3 VPC Gateway Endpoint
+        Value:
+            Ref: S3VpcEndpoint
+    {% endif %}
     {% if has_efs %}
     FileSystem:
         Description:

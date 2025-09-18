@@ -49,3 +49,14 @@ meta:
                 Set to yes to move files back to primary (Standard) storage after they are accessed in IA or Archive storage. Metadata operations such as listing the contents of a directory don't count as file access events.
             value:
                 no
+
+        enable_s3_endpoint:
+            description:
+                Set to yes to create an S3 VPC Gateway Endpoint for secure, cost-free S3 access from the VPC
+            value:
+                yes
+
+        s3_endpoint_policy:
+            description:
+                Optional IAM policy document to control access through the S3 VPC endpoint. If not specified, allows full access.
+            value:

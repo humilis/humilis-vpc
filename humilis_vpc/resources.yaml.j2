@@ -183,6 +183,25 @@ resources:
               - NatEip
               - AllocationId
     {% endif %}
+    ################################################################# VPC ENDPOINTS
+    {% if enable_s3_endpoint %}
+    VpcEndpoint:
+      Type: "AWS::EC2::VPCEndpoint"
+      Properties:
+        VpcId:
+          Ref: Vpc
+        ServiceName:
+          "Fn::Sub": "com.amazonaws.${AWS::Region}.s3"
+        VpcEndpointType: Gateway
+        RouteTableIds:
+          - Ref: VpcRouteTable
+          {% for _ in private_subnets %}
+          - Ref: PrivateSubnet{{loop.index}}RouteTable
+          {% endfor %}
+        {% if s3_endpoint_policy %}
+        PolicyDocument: {{s3_endpoint_policy|tojson}}
+        {% endif %}
+    {% endif %}
     ######################################################################## EFS
     {% if has_efs %}
     FileSystem:
