@@ -38,11 +38,11 @@ outputs:
             Ref: PrivateSubnet{{loop.index}}
     {% endfor %}
     {% if enable_s3_endpoint %}
-    S3VpcEndpoint:
+    VpcEndpoint:
         Description:
             Physical ID of the S3 VPC Gateway Endpoint
         Value:
-            Ref: S3VpcEndpoint
+            Ref: VpcEndpoint
     {% endif %}
     {% if has_efs %}
     FileSystem:
